@@ -5,33 +5,43 @@ from .models import SiteSettings, BoardMember
 from django.utils.translation import gettext_lazy as _
 
 
+
 @admin.register(SiteSettings)
 class SiteSettingsAdmin(TranslatableAdmin):
     fieldsets = (
         (_('Organization'), {
-            'fields': ('organization_name', 'org_number', 'logo', 'founded_year', 'hero_background')
+            'fields': (
+                'organization_name',
+                'org_number',
+                'logo',
+                'founded_year',
+                'hero_background',
+            )
         }),
         (_('Contact'), {
-            'fields': ('email', 'phone', 'address', 'website')
+            'fields': (
+                'email',
+                'phone',
+                'address',
+                'website',
+            )
         }),
         (_('Social Media'), {
-            'fields': ('facebook', 'instagram', 'linkedin')
+            'fields': (
+                'facebook',
+                'instagram',
+                'linkedin',
+            )
         }),
-        (_('Translatable Content'), {
-            'fields': ('mission', 'vision', 'short_description')
+        # ✅ Translatable field'ları buraya ekle
+        (_('Content'), {
+            'fields': (
+                'mission',
+                'vision',
+                'short_description',
+            )
         }),
     )
-
-    def has_add_permission(self, request):
-        # Prevent adding new instances if one already exists
-        if SiteSettings.objects.exists():
-            return False
-        return super().has_add_permission(request)
-
-    def has_delete_permission(self, request, obj=None):
-        # Prevent deletion of the singleton
-        return False
-
 
 @admin.register(BoardMember)
 class BoardMemberAdmin(admin.ModelAdmin):
