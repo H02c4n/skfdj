@@ -35,11 +35,13 @@ from .serializers import ContactMessageSerializer
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from rest_framework.permissions import AllowAny
 
 
 class ContactCreateView(generics.CreateAPIView):
     queryset = ContactMessage.objects.all()
     serializer_class = ContactMessageSerializer
+    permission_classes = [AllowAny]
 
     def perform_create(self, serializer):
         instance = serializer.save()
