@@ -9,7 +9,13 @@ environ.Env.read_env(BASE_DIR / '.env')
 SECRET_KEY = env('SECRET_KEY', default='django-insecure-change-in-production')
 DEBUG = env.bool('DEBUG', default=True)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
+ALLOWED_HOSTS = [
+                 'localhost', 
+                 '127.0.0.1', 
+                 '.onrender.com', 
+                 'foreningsnodroppen.se', 
+                 'www.foreningsnodroppen.se',
+                 ]
 
 
 # Application definition
@@ -205,9 +211,11 @@ SIMPLE_JWT = {
 
 #CORS_ALLOW_ALL_ORIGINS = True  # tighten in production
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
+    'https://foreningsnodroppen.se',
+    'https://www.foreningsnodroppen.se',
+    'https://skfnx.vercel.app/',
 ]
+
 CORS_ALLOW_CREDENTIALS = True
 #CORS_ALLOW_HEADERS = [
 #    'accept',
