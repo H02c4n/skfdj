@@ -9,6 +9,7 @@ class EventFilter(django_filters.FilterSet):
 
     price__gte = django_filters.NumberFilter(field_name='price', lookup_expr='gte')
     price__lte = django_filters.NumberFilter(field_name='price', lookup_expr='lte')
+    price__gt = django_filters.NumberFilter(field_name='price', lookup_expr='gt')
 
     # Handle exact price query (e.g., price=0 or price=245)
     price = django_filters.NumberFilter(method='filter_price_exact')
@@ -22,6 +23,7 @@ class EventFilter(django_filters.FilterSet):
             'date_time__lte',
             'price__gte',
             'price__lte',
+            'price__gt',
             'price',
         ]
     

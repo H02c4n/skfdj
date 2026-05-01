@@ -1,9 +1,28 @@
 from rest_framework import serializers
 from parler_rest.serializers import TranslatableModelSerializer
 from parler_rest.fields import TranslatedFieldsField
-from .models import Event, EventRegistration
+from .models import Event, EventRegistration, RecurrenceRule
 from users.serializers import UserSerializer
 from django.utils.translation import gettext_lazy as _
+
+
+# ----------------------------------------------------------------------------
+# New serializer for a single occurrence (used in expanded lists)
+# ----------------------------------------------------------------------------
+class EventOccurrenceSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    title = serializers.CharField()
+    slug = serializers.CharField()
+    date_time = serializers.DateTimeField()
+    time = serializers.CharField()
+    price = serializers.DecimalField(max_digits=8, decimal_places=2)  # keep raw price
+    is_free = serializers.BooleanField()
+    attendees_count = serializers.IntegerField()
+    capacity = serializers.IntegerField(allow_null=True)
+    image = serializers.CharField(allow_null=True)   # URL string
+    location = serializers.CharField()
+    occurrence_date = serializers.DateField()
+
 
 class EventListSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Event)
@@ -77,10 +96,11 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
     event_slug = serializers.SlugRelatedField(
         source='event', slug_field='slug', queryset=Event.objects.all(), write_only=True
     )
+    occurrence_date = serializers.DateField(required=False, allow_null=True)
 
     class Meta:
         model = EventRegistration
-        fields = ('id', 'user', 'event', 'event_slug', 'registered_at')
+        fields = ('id', 'user', 'event', 'event_slug', 'registered_at', 'occurrence_date')
         read_only_fields = ('user', 'registered_at', 'event')
 
     def create(self, validated_data):
