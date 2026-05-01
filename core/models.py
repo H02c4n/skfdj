@@ -60,10 +60,15 @@ class SiteSettings(TranslatableModel):
 
     @classmethod
     def get_solo(cls):
-        """
-        Returns the singleton instance, creating it if it doesn't exist.
-        """
-        obj, created = cls.objects.get_or_create(pk=1)
+        obj = cls.objects.first()  # pk ne olursa olsun ilk kaydı al
+        if obj is None:
+            obj = cls.objects.create(
+                organization_name='',
+                org_number='',
+                email='',
+                phone='',
+                address='',
+            )
         return obj
 
 
