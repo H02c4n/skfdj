@@ -87,21 +87,21 @@ WSGI_APPLICATION = 'main.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# import dj_database_url
-
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=env('DATABASE_URL'),
-#         conn_max_age=600
-#     )
-# }
+import dj_database_url
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=env('DATABASE_URL'),
+        conn_max_age=600
+    )
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Custom user model
@@ -210,12 +210,12 @@ SIMPLE_JWT = {
     'UPDATE_LAST_LOGIN': True,
 }
 
-#CORS_ALLOW_ALL_ORIGINS = True  # tighten in production
+CORS_ALLOW_ALL_ORIGINS = True  # tighten in production
 CORS_ALLOWED_ORIGINS = [
     #'http://127.0.0.1:8000',
     'https://foreningsnodroppen.se',
     'https://www.foreningsnodroppen.se',
-    #'https://skfnx.vercel.app/',
+    'https://skfnx.vercel.app/',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -234,13 +234,13 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')
-EMAIL_PORT = env('EMAIL_PORT', default=587, cast=int)
-EMAIL_USE_TLS = env('EMAIL_USE_TLS', default=True, cast=bool)
-#EMAIL_USE_SSL = env('EMAIL_USE_SSL', default=True, cast=bool)
-EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='')
+EMAIL_HOST = env('EMAIL_HOST', default='send.one.com')
+EMAIL_PORT = env('EMAIL_PORT', default=465, cast=int)
+#EMAIL_USE_TLS = env('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_USE_SSL = env('EMAIL_USE_SSL', default=True, cast=bool)
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='info@foreningsnodroppen.se')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='noreply@association.se')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='info@foreningsnodroppen.se')
 
 # CKEditor
 CKEDITOR_CONFIGS = {
